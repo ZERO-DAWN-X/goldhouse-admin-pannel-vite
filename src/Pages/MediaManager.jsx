@@ -2,7 +2,9 @@ import React from 'react'
 
 function MediaManager() {
   return (
-    <div>MediaManager</div>
+    <div>
+      
+    </div>
   )
 }
 

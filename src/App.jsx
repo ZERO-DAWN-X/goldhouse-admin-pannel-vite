@@ -16,8 +16,8 @@ function App() {
   return (
     <div className="bg-gray-200 pb-3">
       <div
-        className={`sm:w-60 fixed ${
-          sidebarOpen ? "block" : "hidden"
+        className={`sm:w-60 fixed hidden ${
+          sidebarOpen ? "lg:block" : "lg:hidden"
         } transition-all duration-300 ease-in-out`}
       >
         <SideNavBar />
@@ -33,14 +33,14 @@ function App() {
               className="text-gray-500 hover:text-gray-800 transition duration-300 ease-in-out cursor-pointer text-[30px]"
               onClick={toggleSidebar}
             >
-              {sidebarOpen ? <FaToggleOff /> : <FaToggleOn />}
+              {sidebarOpen ? <FaToggleOn /> : <FaToggleOff />}
             </i>
           }
         />
       </div>
       <main
         className={`sm:ml-64 sm:mr-4 my-4 ${
-          sidebarOpen ? "sm:ml-64" : "sm:ml-4"
+          sidebarOpen ? "lg:ml-64 sm:ml-4 m-4" : "sm:ml-4"
         }`}
       >
         <Outlet />
