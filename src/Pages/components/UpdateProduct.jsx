@@ -67,7 +67,7 @@ const UpdateProduct = ({ products }) => {
 
   return (
     <div>
-      <div className="p-5 rounded-xl bg-gray-900 text-white">
+      <div className="p-5 mb-10 rounded-xl bg-gray-900 text-white">
         <h2 className="font-bold text-lg mb-4">Products List</h2>
         <div className="overflow-x-auto">
           <table className="min-w-full table-auto bg-gray-800 rounded-lg">
