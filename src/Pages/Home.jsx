@@ -22,7 +22,7 @@ function Home() {
           </button>
         </div>
       </div>
-      <div className="text-black grid grid-cols-1 md:grid-cols-4 gap-3">
+      <div className="text-black lg:grid grid-cols-1 md:grid-cols-4 gap-3 sm:flex sm:flex-col">
         <div className="col-span-3 pb-5 bg-white rounded-xl">
           <div className="text-black p-5 flex justify-between">
             <h1 className="text-3xl font-bold">Overview</h1>

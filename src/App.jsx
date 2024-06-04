@@ -24,7 +24,7 @@ function App() {
       </div>
       <div
         className={`sm:ml-60 ${
-          sidebarOpen ? "sm:ml-60" : "sm:ml-0"
+          sidebarOpen ? "lg:ml-60 sm:ml-0" : "sm:ml-0"
         } transition-all duration-300 ease-in-out`}
       >
         <Header
