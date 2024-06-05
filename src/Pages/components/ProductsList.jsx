@@ -1,34 +1,9 @@
-import React from "react";
-import sampleData from "../../data/sampleData.json";
+import React from 'react'
 
-const ProductList = () => {
-  // Access sample data
-  const { ItemsStock } = sampleData;
-
+function ProductsList() {
   return (
-    <div>
-      <h2>Sold Items</h2>
-      <ul>
-        {ItemsStock.map((item) => (
-          <li key={item.id}>{item.name}</li>
-        ))}
-      </ul>
+    <div>ProductsList</div>
+  )
+}
 
-      <h2>Unsold Items</h2>
-      <ul>
-        {ItemsStock.map((item) => (
-          <li key={item.id}>{item.name}</li>
-        ))}
-      </ul>
-
-      <h2>Active Items</h2>
-      <ul>
-        {ItemsStock.map((item) => (
-          <li key={item.id}>{item.name}</li>
-        ))}
-      </ul>
-    </div>
-  );
-};
-
-export default ProductList;
+export default ProductsList
