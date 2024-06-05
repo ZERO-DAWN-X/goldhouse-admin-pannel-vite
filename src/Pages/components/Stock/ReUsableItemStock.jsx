@@ -1,6 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
+import ItemDetails from "./ItemDetails";
 
 function ReUsableItemStock({ items, pageIdentifier }) {
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [soldItemCount, setSoldItemCount] = useState({});
+
+  const handleConform = (itemId) => {
+    const updatedItems = items.map((item) =>
+      item.id === itemId ? { ...item, orderShow: false } : item
+    );
+    setSelectedItem(null);
+    setItems(updatedItems);
+
+    setSoldItemCount((prevCount) => ({
+      ...prevCount,
+      [itemId]: (prevCount[itemId] || 0) + 1,
+    }));
+  };
+
+  const handleItemClick = (item) => {
+    setSelectedItem(item);
+  };
+
   const getStatusText = (status) => {
     switch (status) {
       case "sold":
@@ -15,6 +36,7 @@ function ReUsableItemStock({ items, pageIdentifier }) {
         return "Unknown";
     }
   };
+
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-2xl font-bold mb-4">
@@ -24,7 +46,8 @@ function ReUsableItemStock({ items, pageIdentifier }) {
         {items.map((item) => (
           <div
             key={item.id}
-            className="bg-white shadow-lg rounded-lg overflow-hidden"
+            className="bg-white shadow-lg rounded-lg overflow-hidden cursor-pointer"
+            onClick={() => handleItemClick(item)}
           >
             <div className="relative">
               <img
@@ -59,6 +82,15 @@ function ReUsableItemStock({ items, pageIdentifier }) {
           </div>
         ))}
       </div>
+      {selectedItem && (
+        <ItemDetails
+          selectedItem={selectedItem}
+          pageIdentifier={pageIdentifier}
+          onClose={() => setSelectedItem(null)}
+          onConform={() => handleConform(selectedItem.id)}
+          soldCount={soldItemCount[selectedItem.id] || 0}
+        />
+      )}
     </div>
   );
 }

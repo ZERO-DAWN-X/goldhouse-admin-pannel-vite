@@ -42,7 +42,7 @@ function Home() {
               <div className="bg-transparent p-5 rounded-xl">
                 <h1 className="text-xl font-bold">Income</h1>
                 <div className="flex justify-between">
-                  <div className="text-2xl font-bold">$3424100</div>
+                  <div className="text-2xl font-bold">LKR 3424100</div>
                   <div className="text-green-500">+ 20%</div>
                 </div>
               </div>

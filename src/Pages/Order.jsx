@@ -10,7 +10,9 @@ function Order() {
   const itemsWithUnsold = ItemsStock.filter((item) => item.status == "unsold");
   const itemsWithSold = ItemsStock.filter((item) => item.status === "sold");
   const itemsWithStock = ItemsStock.filter((item) => item.stock > 0);
-  const itemsWithOrders = ItemsStock.filter((item) => item.orders > 0);
+  const itemsWithOrders = ItemsStock.filter(
+    (item) => item.orders > 0 && item.orderShow === true
+  );
 
   const renderContent = () => {
     switch (currentView) {
