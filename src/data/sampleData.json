@@ -30,7 +30,9 @@
       "DeliveryMethod": "Express Shipping",
       "Discount": "10% Off",
       "Paid": false,
-      "orderShow": true
+      "orderShow": true,
+      "customersAmount": 9756,
+      "income": 774125
     },
     {
       "id": 2,

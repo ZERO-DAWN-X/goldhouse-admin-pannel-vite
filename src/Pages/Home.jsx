@@ -1,21 +1,58 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import DropDownOption from "../components/Ui/DropDownOption";
 import SideBanner from "../components/SideBanner";
 import LineChart from "../components/Ui/LineChart";
+import sampleData from "../data/sampleData.json";
 
 function Home() {
+  const [customersAmount, setCustomersAmount] = useState(0);
+  const [income, setIncome] = useState(0);
+  const [prevCustomersAmount, setPrevCustomersAmount] = useState(0);
+  const [prevIncome, setPrevIncome] = useState(0);
+  const [customersChange, setCustomersChange] = useState(0);
+  const [incomeChange, setIncomeChange] = useState(0);
+
+  useEffect(() => {
+    const fetchData = () => {
+      const fetchedCustomersAmount = sampleData.ItemsStock[0].customersAmount;
+      const fetchedIncome = sampleData.ItemsStock[0].income;
+
+      const customersChange =
+        prevCustomersAmount !== 0
+          ? ((fetchedCustomersAmount - prevCustomersAmount) /
+              prevCustomersAmount) *
+            100
+          : 0;
+      const incomeChange =
+        prevIncome !== 0
+          ? ((fetchedIncome - prevIncome) / prevIncome) * 100
+          : 0;
+
+      setCustomersAmount(fetchedCustomersAmount);
+      setIncome(fetchedIncome);
+
+      console.log("Customers Change:", customersChange.toFixed(2) + "%");
+      console.log("Income Change:", incomeChange.toFixed(2) + "%");
+
+      setCustomersChange(customersChange);
+      setIncomeChange(incomeChange);
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <div>
       <div className="my-4">
         <div className="flex gap-3">
           <button>
-            <h2 className="font-bold">Unread Massages</h2>
+            <h2 className="font-bold">Unread Messages</h2>
           </button>
           <button>
             <h2 className="font-bold">New Orders</h2>
           </button>
           <button>
-            <h2 className="font-bold">Sales in last 30 Day</h2>
+            <h2 className="font-bold">Sales in last 30 Days</h2>
           </button>
           <button>
             <h2 className="font-bold">Advertising</h2>
@@ -33,8 +70,14 @@ function Home() {
               <div className="bg-white p-5 rounded-xl shadow-md">
                 <h1 className="text-xl font-bold">Customers</h1>
                 <div className="flex justify-between">
-                  <div className="text-2xl font-bold">1,00,000</div>
-                  <div className="text-green-500">+ 8%</div>
+                  <div className="text-2xl font-bold">{customersAmount}</div>
+                  <div
+                    className={`text-${
+                      customersChange >= 0 ? "green" : "red"
+                    }-500`}
+                  >
+                    {customersChange.toFixed(2)} %{" "}
+                  </div>
                 </div>
               </div>
             </div>
@@ -42,8 +85,14 @@ function Home() {
               <div className="bg-transparent p-5 rounded-xl">
                 <h1 className="text-xl font-bold">Income</h1>
                 <div className="flex justify-between">
-                  <div className="text-2xl font-bold">LKR 3424100</div>
-                  <div className="text-green-500">+ 20%</div>
+                  <div className="text-2xl font-bold">LKR {income}</div>
+                  <div
+                    className={`text-${
+                      incomeChange >= 0 ? "green" : "red"
+                    }-500`}
+                  >
+                    {incomeChange.toFixed(2)} %{" "}
+                  </div>
                 </div>
               </div>
             </div>

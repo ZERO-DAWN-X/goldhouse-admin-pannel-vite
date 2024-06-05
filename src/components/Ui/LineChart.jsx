@@ -5,7 +5,6 @@ class ApexChart extends React.Component {
   constructor(props) {
     super(props);
 
-    // Sample data
     const dates = [
       1609459200000, 1609545600000, 1609632000000, 1609718400000, 1609804800000,
       1609891200000, 1609977600000, 1610064000000, 1610150400000, 1610236800000,
