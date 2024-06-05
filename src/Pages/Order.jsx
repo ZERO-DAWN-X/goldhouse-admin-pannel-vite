@@ -1,36 +1,47 @@
 import React, { useState } from "react";
-import UnsoldItem from "./components/Stock/UnsoldItem";
-import SoldItems from "./components/Stock/SoldItem";
-import InStock from "./components/Stock/InStock";
-import Orders from "./components/Stock/Orders";
+import sampleData from "../data/sampleData.json";
+import ReUsableItemStock from "./components/Stock/ReUsableItemStock";
 
 function Order() {
   const [currentView, setCurrentView] = useState("Orders");
+
+  const { ItemsStock } = sampleData;
+
+  const itemsWithUnsold = ItemsStock.filter((item) => item.status == "unsold");
+  const itemsWithSold = ItemsStock.filter((item) => item.status === "sold");
+  const itemsWithStock = ItemsStock.filter((item) => item.stock > 0);
+  const itemsWithOrders = ItemsStock.filter((item) => item.orders > 0);
 
   const renderContent = () => {
     switch (currentView) {
       case "Unsold Items":
         return (
           <div>
-            <UnsoldItem />
+            <ReUsableItemStock
+              items={itemsWithUnsold}
+              pageIdentifier="unsold"
+            />
           </div>
         );
       case "Sold Items":
         return (
           <div>
-            <SoldItems />
+            <ReUsableItemStock items={itemsWithSold} pageIdentifier="sold" />
           </div>
         );
       case "In Stock":
         return (
           <div>
-            <InStock />
+            <ReUsableItemStock items={itemsWithStock} pageIdentifier="stock" />
           </div>
         );
       default:
         return (
           <div>
-            <Orders />
+            <ReUsableItemStock
+              items={itemsWithOrders}
+              pageIdentifier="orders"
+            />
           </div>
         );
     }

@@ -1,72 +1,94 @@
 {
-  "soldItems": [
+  "ItemsStock": [
     {
       "id": 1,
       "name": "Product 1",
       "amount": 50,
-      "dateSold": "2024-06-01"
+      "status": "sold",
+      "dateSold": "2024-06-01",
+      "stock":"20",
+      "orders":"0"
     },
     {
       "id": 2,
       "name": "Product 2",
       "amount": 30,
-      "dateSold": "2024-06-02"
+      "status": "sold",
+      "dateSold": "2024-06-02",
+      "stock":"43",
+      "orders":"2"
+    },
+    {
+      "id": 3,
+      "name": "Product 3",
+      "amount": 20,
+      "status": "unsold",
+      "dateSold": "2024-06-02",
+      "stock":"67",
+      "orders":"1"
+    },
+    {
+      "id": 4,
+      "name": "Product 4",
+      "amount": 40,
+      "status": "unsold",
+      "dateSold": "2024-06-02",
+      "stock":"1",
+      "orders":"0"
+    },
+    {
+      "id": 5,
+      "name": "Product 5",
+      "amount": 10,
+      "status": "sold",
+      "dateSold": "2024-06-02",
+      "stock":"0",
+      "orders":"10"
+    },
+    {
+      "id": 6,
+      "name": "Product 6",
+      "amount": 60,
+      "status": "sold",
+      "dateSold": "2024-06-02",
+      "stock":"2",
+      "orders":"5"
     },
     {
       "id": 7,
       "name": "Product 7",
       "amount": 70,
-      "dateSold": "2024-06-03"
+      "status": "unsold",
+      "dateSold": "2024-06-02",
+      "stock":"3",
+      "orders":"0"
     },
     {
       "id": 8,
       "name": "Product 8",
       "amount": 80,
-      "dateSold": "2024-06-04"
-    }
-  ],
-  "unsoldItems": [
-    {
-      "id": 3,
-      "name": "Product 3",
-      "amount": 20
-    },
-    {
-      "id": 4,
-      "name": "Product 4",
-      "amount": 40
-    },
-    {
-      "id": 11,
-      "name": "Product 11",
-      "amount": 110
-    },
-    {
-      "id": 12,
-      "name": "Product 12",
-      "amount": 120
-    }
-  ],
-  "activeItems": [
-    {
-      "id": 5,
-      "name": "Product 5",
-      "amount": 10
-    },
-    {
-      "id": 6,
-      "name": "Product 6",
-      "amount": 60
+      "status": "sold",
+      "dateSold": "2024-06-02",
+      "stock":"4",
+      "orders":"8"
     },
     {
       "id": 9,
       "name": "Product 9",
-      "amount": 90
+      "amount": 90,
+      "status": "unsold",
+      "dateSold": "2024-06-02",
+      "stock":"5",
+      "orders":"0"
     },
     {
       "id": 10,
       "name": "Product 10",
-      "amount": 100
+      "amount": 100,
+      "status": "sold",
+      "dateSold": "2024-06-02",
+      "stock":"6",
+      "orders":"10"
     }
   ]
 }
