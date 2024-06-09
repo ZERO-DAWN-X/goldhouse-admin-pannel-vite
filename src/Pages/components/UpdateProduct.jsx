@@ -1,12 +1,20 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { MdEditSquare } from "react-icons/md";
 import { IoCloudDone } from "react-icons/io5";
 import CustomDropdown from "./CustomDropdown";
+import Cropper from "react-easy-crop";
+import { AiFillCloseCircle } from "react-icons/ai";
 
 const UpdateProduct = ({ products }) => {
   const [editedProducts, setEditedProducts] = useState([...products]);
   const [editIndex, setEditIndex] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
+  const [cropping, setCropping] = useState(false);
+  const [crop, setCrop] = useState({ x: 0, y: 0 });
+  const [zoom, setZoom] = useState(1);
+  const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
+  const [imageSrc, setImageSrc] = useState(null);
+  const [imageIndex, setImageIndex] = useState(null);
   const [editFormData, setEditFormData] = useState({
     name: "",
     id: "",
@@ -26,10 +34,17 @@ const UpdateProduct = ({ products }) => {
     setEditFormData({ ...editFormData, [field]: value });
   };
 
-  const handleImageChange = (e, index) => {
-    const newImages = [...editFormData.images];
-    newImages[index] = URL.createObjectURL(e.target.files[0]);
-    setEditFormData({ ...editFormData, images: newImages });
+  const handleImageChange = async (e, index) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        setImageSrc(reader.result);
+        setImageIndex(index);
+        setCropping(true);
+      };
+    }
   };
 
   const handleImageRemove = (index) => {
@@ -39,7 +54,9 @@ const UpdateProduct = ({ products }) => {
   };
 
   const handleSave = () => {
-    products[editIndex] = editedProducts[editIndex];
+    const updatedProducts = [...editedProducts];
+    updatedProducts[editIndex] = editFormData;
+    setEditedProducts(updatedProducts);
     setShowPopup(true);
     setTimeout(() => setShowPopup(false), 2000);
     setEditIndex(null);
@@ -65,8 +82,84 @@ const UpdateProduct = ({ products }) => {
     });
   };
 
+  const onCropComplete = useCallback((croppedArea, croppedAreaPixels) => {
+    setCroppedAreaPixels(croppedAreaPixels);
+  }, []);
+
+  const getCroppedImg = async (imageSrc, croppedAreaPixels) => {
+    const image = new Image();
+    image.src = imageSrc;
+    const canvas = document.createElement("canvas");
+    const ctx = canvas.getContext("2d");
+
+    canvas.width = croppedAreaPixels.width;
+    canvas.height = croppedAreaPixels.height;
+
+    ctx.drawImage(
+      image,
+      croppedAreaPixels.x,
+      croppedAreaPixels.y,
+      croppedAreaPixels.width,
+      croppedAreaPixels.height,
+      0,
+      0,
+      croppedAreaPixels.width,
+      croppedAreaPixels.height
+    );
+
+    return new Promise((resolve, reject) => {
+      canvas.toBlob((blob) => {
+        if (!blob) {
+          reject(new Error("Canvas is empty"));
+          return;
+        }
+        const fileUrl = URL.createObjectURL(blob);
+        resolve(fileUrl);
+      }, "image/jpeg");
+    });
+  };
+
+  const handleCrop = async () => {
+    try {
+      const croppedImageUrl = await getCroppedImg(imageSrc, croppedAreaPixels);
+      const newImages = [...editFormData.images];
+      newImages[imageIndex] = croppedImageUrl;
+      setEditFormData({ ...editFormData, images: newImages });
+      setCropping(false);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
   return (
     <div>
+      {cropping && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60">
+          <div className="relative w-3/5 h-4/5 m-10 bg-white p-4">
+            <Cropper
+              image={imageSrc}
+              crop={crop}
+              zoom={zoom}
+              aspect={4 / 3}
+              onCropChange={setCrop}
+              onZoomChange={setZoom}
+              onCropComplete={onCropComplete}
+            />
+            <button
+              onClick={handleCrop}
+              className="absolute bottom-4 left-4 bg-blue-500 text-white px-4 py-2 rounded"
+            >
+              Crop
+            </button>
+            <button
+              onClick={() => setCropping(false)}
+              className="absolute bottom-4 right-4 bg-red-500 text-white px-4 py-2 rounded"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      )}
       <div className="p-5 mb-10 rounded-xl bg-gray-900 text-white">
         <h2 className="font-bold text-lg mb-4">Products List</h2>
         <div className="overflow-x-auto">
@@ -193,7 +286,7 @@ const UpdateProduct = ({ products }) => {
             </div>
 
             <div className="col-span-3">
-              <div className="grid  grid-cols-3 font-bold gap-4 my-4 mb-10">
+              <div className="grid grid-cols-3 font-bold gap-4 my-4 mb-10">
                 <CustomDropdown
                   label="Size"
                   options={[
@@ -242,13 +335,21 @@ const UpdateProduct = ({ products }) => {
               {/* Image Upload Grid */}
 
               <div className="grid grid-cols-8 gap-5 mt-4">
-                <div className="col-span-6 bg-gray-200 p-2 h-full">
+                <div className="col-span-6 bg-gray-200 p-2 h-full relative">
                   {editFormData.images[0] ? (
-                    <img
-                      src={editFormData.images[0]}
-                      alt="Main product"
-                      className="w-full h-full object-cover"
-                    />
+                    <>
+                      <img
+                        src={editFormData.images[0]}
+                        alt="Main product"
+                        className="w-full h-full object-cover"
+                      />
+                      <button
+                        onClick={() => handleImageRemove(0)}
+                        className="text-red-500 absolute top-1 right-1"
+                      >
+                        <AiFillCloseCircle size={20} />
+                      </button>
+                    </>
                   ) : (
                     <label
                       htmlFor="main-image-upload"
@@ -270,7 +371,7 @@ const UpdateProduct = ({ products }) => {
                   {[...Array(3)].map((_, index) => (
                     <div key={index} className="bg-gray-200 p-2 h-48 relative">
                       {editFormData.images[index + 1] ? (
-                        <div>
+                        <>
                           <img
                             src={editFormData.images[index + 1]}
                             alt={`image ${index + 1}`}
@@ -280,9 +381,9 @@ const UpdateProduct = ({ products }) => {
                             onClick={() => handleImageRemove(index + 1)}
                             className="text-red-500 absolute top-1 right-1"
                           >
-                            Remove
+                            <AiFillCloseCircle size={20} />
                           </button>
-                        </div>
+                        </>
                       ) : (
                         <label
                           htmlFor={`image-upload-${index + 1}`}
