@@ -5,14 +5,21 @@ import { AiFillCloseCircle } from "react-icons/ai";
 
 const ProductAdd = ({ onSubmit }) => {
   const [product, setProduct] = useState({
-    name: "",
-    description: "",
-    size: "",
-    color: "",
-    price: "",
-    stock: "",
-    discount: "",
+    title: "",
     category: "",
+    price: "",
+    description: "",
+    stock: "",
+    metal: "",
+    weight: "",
+    length: "",
+    width: "",
+    ringSize: "",
+    color: "",
+    stone: "",
+    gender: "",
+    review: "",
+    style: "",
     images: [null, null, null, null], // Initialize with placeholders for 4 image slots
   });
   const [cropping, setCropping] = useState(false);
@@ -52,14 +59,21 @@ const ProductAdd = ({ onSubmit }) => {
     e.preventDefault();
     onSubmit(product);
     setProduct({
-      name: "",
-      description: "",
-      size: "",
-      color: "",
-      price: "",
-      stock: "",
-      discount: "",
+      title: "",
       category: "",
+      price: "",
+      description: "",
+      stock: "",
+      metal: "",
+      weight: "",
+      length: "",
+      width: "",
+      ringSize: "",
+      color: "",
+      stone: "",
+      gender: "",
+      review: "",
+      style: "",
       images: [null, null, null, null],
     });
   };
@@ -144,28 +158,167 @@ const ProductAdd = ({ onSubmit }) => {
       )}
       <form onSubmit={handleSubmit} className="max-w-5xl m-auto">
         <div className="grid grid-cols-1 md:grid-cols-1 gap-6">
-          <input
-            type="text"
-            name="name"
-            value={product.name}
-            onChange={handleChange}
-            placeholder="Product Name"
-            className="p-3 border-none rounded-lg bg-gray-200"
-          />
-          <textarea
-            name="description"
-            value={product.description}
-            onChange={handleChange}
-            placeholder="Product Description"
-            className="p-3 border-none rounded-lg bg-gray-200"
-            style={{
-              height: `${
-                Math.max(3, Math.ceil(product.description.length / 50)) * 4.8
-              }rem`,
-            }}
-          />
+          <div className="grid grid-cols-3 md:grid-cols-3 gap-6">
+            <input
+              type="text"
+              name="title"
+              value={product.title}
+              onChange={handleChange}
+              placeholder="Product Name"
+              className="p-3 border-none rounded-lg bg-gray-200"
+            />
+            <input
+              type="number"
+              name="price"
+              value={product.price}
+              onChange={handleChange}
+              placeholder="Price"
+              className="p-3 border-none rounded-lg bg-gray-200"
+            />
+            <input
+              type="number"
+              name="review"
+              value={product.review}
+              onChange={handleChange}
+              placeholder="Review"
+              className="p-3 border-none rounded-lg bg-gray-200"
+            />
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-1">
+            <textarea
+              name="description"
+              value={product.description}
+              onChange={handleChange}
+              placeholder="Product Description"
+              className="p-3 border-none rounded-lg bg-gray-200"
+            />
+          </div>
         </div>
         <div className="grid grid-cols-3 font-bold gap-4 my-4">
+          <CustomDropdown
+            label="Stock"
+            options={[
+              { label: "In Stock", value: "stock" },
+              { label: "Outof Stock", value: "outof stock" },
+            ]}
+            name="stock"
+            value={product.stock}
+            onChange={handleChange}
+          />
+          <CustomDropdown
+            label="Category"
+            options={[
+              { label: "Tops", value: "tops" },
+              { label: "Bottoms", value: "bottoms" },
+              { label: "Dresses", value: "dresses" },
+              { label: "Accessories", value: "accessories" },
+            ]}
+            name="category"
+            value={product.category}
+            onChange={handleChange}
+          />
+          <CustomDropdown
+            label="Weight"
+            options={[
+              { label: "100g", value: "100g" },
+              { label: "200g", value: "200g" },
+              { label: "300g", value: "300g" },
+              { label: "400g", value: "400g" },
+              { label: "500g", value: "500g" },
+            ]}
+            name="weight"
+            value={product.weight}
+            onChange={handleChange}
+          />
+          <CustomDropdown
+            label="Length"
+            options={[
+              { label: "100cm", value: "100cm" },
+              { label: "200cm", value: "200cm" },
+              { label: "300cm", value: "300cm" },
+              { label: "400cm", value: "400cm" },
+              { label: "500cm", value: "500cm" },
+            ]}
+            name="length"
+            value={product.length}
+            onChange={handleChange}
+          />
+          <CustomDropdown
+            label="Width"
+            options={[
+              { label: "100cm", value: "100cm" },
+              { label: "200cm", value: "200cm" },
+              { label: "300cm", value: "300cm" },
+              { label: "400cm", value: "400cm" },
+              { label: "500cm", value: "500cm" },
+            ]}
+            name="width"
+            value={product.width}
+            onChange={handleChange}
+          />
+          <CustomDropdown
+            label="Ring Size"
+            options={[
+              { label: "5", value: "5" },
+              { label: "6", value: "6" },
+              { label: "7", value: "7" },
+              { label: "8", value: "8" },
+              { label: "9", value: "9" },
+            ]}
+            name="ringSize"
+            value={product.ringSize}
+            onChange={handleChange}
+          />
+          <CustomDropdown
+            label="Stone"
+            options={[
+              { label: "Diamond", value: "diamond" },
+              { label: "Ruby", value: "ruby" },
+              { label: "Sapphire", value: "sapphire" },
+              { label: "Emerald", value: "emerald" },
+              { label: "Topaz", value: "topaz" },
+            ]}
+            name="stone"
+            value={product.stone}
+            onChange={handleChange}
+          />
+
+          <CustomDropdown
+            label="Metal"
+            options={[
+              { label: "Gold", value: "gold" },
+              { label: "Silver", value: "silver" },
+              { label: "Platinum", value: "platinum" },
+              { label: "Titanium", value: "titanium" },
+              { label: "Rose Gold", value: "rose gold" },
+            ]}
+            name="metal"
+            value={product.metal}
+            onChange={handleChange}
+          />
+          <CustomDropdown
+            label="Style"
+            options={[
+              { label: "Modern", value: "modern" },
+              { label: "Vintage", value: "vintage" },
+              { label: "Classic", value: "classic" },
+              { label: "Retro", value: "retro" },
+              { label: "Bohemian", value: "bohemian" },
+            ]}
+            name="style"
+            value={product.style}
+            onChange={handleChange}
+          />
+          <CustomDropdown
+            label="Gender"
+            options={[
+              { label: "Male", value: "M" },
+              { label: "Female", value: "F" },
+            ]}
+            name="gender"
+            value={product.gender}
+            onChange={handleChange}
+          />
           <CustomDropdown
             label="Size"
             options={[
@@ -188,19 +341,6 @@ const ProductAdd = ({ onSubmit }) => {
             ]}
             name="color"
             value={product.color}
-            onChange={handleChange}
-          />
-          <CustomDropdown
-            label="Material"
-            options={[
-              { label: "Cotton", value: "cotton" },
-              { label: "Polyester", value: "polyester" },
-              { label: "Wool", value: "wool" },
-              { label: "Silk", value: "silk" },
-              { label: "Leather", value: "leather" },
-            ]}
-            name="category"
-            value={product.category}
             onChange={handleChange}
           />
         </div>

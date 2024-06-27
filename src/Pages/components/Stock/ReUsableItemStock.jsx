@@ -10,7 +10,8 @@ function ReUsableItemStock({ items, pageIdentifier }) {
       item.id === itemId ? { ...item, orderShow: false } : item
     );
     setSelectedItem(null);
-    setItems(updatedItems);
+    // Assuming items is managed elsewhere (e.g., in parent component or state)
+    // setItems(updatedItems);
 
     setSoldItemCount((prevCount) => ({
       ...prevCount,
@@ -28,8 +29,8 @@ function ReUsableItemStock({ items, pageIdentifier }) {
         return "Sold";
       case "unsold":
         return "Unsold";
-      case "stock":
-        return "In Stock";
+      case "Outof Stock":
+        return "Out of Stock";
       case "orders":
         return "Orders";
       default:
@@ -61,7 +62,7 @@ function ReUsableItemStock({ items, pageIdentifier }) {
                     ? "bg-red-500"
                     : pageIdentifier === "unsold"
                     ? "bg-blue-500"
-                    : pageIdentifier === "stock"
+                    : pageIdentifier === "Outof Stock"
                     ? "bg-yellow-500"
                     : "bg-green-500"
                 } text-white py-1 px-3 rounded-bl-lg font-bold`}
@@ -73,7 +74,11 @@ function ReUsableItemStock({ items, pageIdentifier }) {
               <h2 className="text-xl font-bold mb-2">{item.name}</h2>
               <p className="text-gray-700">
                 {getStatusText(pageIdentifier)}:{" "}
-                {pageIdentifier === "orders" ? item.orders : item.stock}
+                {pageIdentifier === "orders"
+                  ? item.orders
+                  : pageIdentifier === "Out of Stock"
+                  ? item.OutofStock
+                  : item.amount}
               </p>
               {pageIdentifier === "sold" && (
                 <p className="text-gray-700">Date: {item.dateSold}</p>

@@ -1,43 +1,30 @@
 import React, { useState } from "react";
 import sampleData from "../data/sampleData.json";
 import ReUsableItemStock from "./components/Stock/ReUsableItemStock";
+import { FaSearch } from "react-icons/fa";
 
 function Order() {
-  const [currentView, setCurrentView] = useState("Orders");
+  const [currentView, setCurrentView] = useState("orders");
+  const [searchInput, setSearchInput] = useState("");
 
   const { ItemsStock } = sampleData;
 
-  const itemsWithUnsold = ItemsStock.filter((item) => item.status == "unsold");
-  const itemsWithSold = ItemsStock.filter((item) => item.status === "sold");
-  const itemsWithStock = ItemsStock.filter((item) => item.stock > 0);
-  const itemsWithOrders = ItemsStock.filter(
+  const filteredItems = ItemsStock.filter((item) =>
+    item.name.toLowerCase().includes(searchInput.toLowerCase())
+  );
+
+  const itemsWithUnsold = filteredItems.filter(
+    (item) => item.status === "unsold"
+  );
+  const itemsWithSold = filteredItems.filter((item) => item.status === "sold");
+  const itemsOutofStock = filteredItems.filter((item) => item.OutofStock === 0);
+  const itemsWithOrders = filteredItems.filter(
     (item) => item.orders > 0 && item.orderShow === true
   );
 
   const renderContent = () => {
     switch (currentView) {
-      case "Unsold Items":
-        return (
-          <div>
-            <ReUsableItemStock
-              items={itemsWithUnsold}
-              pageIdentifier="unsold"
-            />
-          </div>
-        );
-      case "Sold Items":
-        return (
-          <div>
-            <ReUsableItemStock items={itemsWithSold} pageIdentifier="sold" />
-          </div>
-        );
-      case "In Stock":
-        return (
-          <div>
-            <ReUsableItemStock items={itemsWithStock} pageIdentifier="stock" />
-          </div>
-        );
-      default:
+      case "orders":
         return (
           <div>
             <ReUsableItemStock
@@ -46,27 +33,63 @@ function Order() {
             />
           </div>
         );
+      case "unsold":
+        return (
+          <div>
+            <ReUsableItemStock
+              items={itemsWithUnsold}
+              pageIdentifier="unsold"
+            />
+          </div>
+        );
+      case "sold":
+        return (
+          <div>
+            <ReUsableItemStock items={itemsWithSold} pageIdentifier="sold" />
+          </div>
+        );
+      case "outofstock":
+        return (
+          <div>
+            <ReUsableItemStock
+              items={itemsOutofStock}
+              pageIdentifier="Outof Stock"
+            />
+          </div>
+        );
+      default:
+        return null;
     }
   };
 
   return (
     <div>
-      <div>
-        <div className="my-4">
-          <div className="flex gap-3">
-            <button onClick={() => setCurrentView("Orders")}>
-              <h2 className="font-bold">Orders</h2>
-            </button>
-            <button onClick={() => setCurrentView("Unsold Items")}>
-              <h2 className="font-bold">UnSold Items</h2>
-            </button>
-            <button onClick={() => setCurrentView("Sold Items")}>
-              <h2 className="font-bold">Sold Items</h2>
-            </button>
-            <button onClick={() => setCurrentView("In Stock")}>
-              <h2 className="font-bold">In Stock</h2>
-            </button>
+      <div className="my-4">
+        <div>
+          <div className="relative flex items-center w-full my-5">
+            <FaSearch className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500" />
+            <input
+              type="text"
+              placeholder="Search or type Command ..."
+              className="outline-none border border-gray-300 rounded-full px-10 py-2 text-md w-full"
+              value={searchInput}
+              onChange={(e) => setSearchInput(e.target.value)}
+            />
           </div>
+        </div>
+        <div className="flex gap-3">
+          <button onClick={() => setCurrentView("orders")}>
+            <h2 className="font-bold">Orders</h2>
+          </button>
+          <button onClick={() => setCurrentView("unsold")}>
+            <h2 className="font-bold">Unsold Items</h2>
+          </button>
+          <button onClick={() => setCurrentView("sold")}>
+            <h2 className="font-bold">Sold Items</h2>
+          </button>
+          <button onClick={() => setCurrentView("outofstock")}>
+            <h2 className="font-bold">Out of Stock</h2>
+          </button>
         </div>
       </div>
       <div className="update-state bg-white min-h-screen rounded-lg">

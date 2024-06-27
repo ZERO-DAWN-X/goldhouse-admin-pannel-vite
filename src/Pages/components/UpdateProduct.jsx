@@ -16,14 +16,21 @@ const UpdateProduct = ({ products }) => {
   const [imageSrc, setImageSrc] = useState(null);
   const [imageIndex, setImageIndex] = useState(null);
   const [editFormData, setEditFormData] = useState({
-    name: "",
-    id: "",
-    amount: "",
-    discount: "",
-    date: "",
-    size: "",
+    title: "",
+    category: "",
+    price: "",
+    description: "",
+    stock: "",
+    metal: "",
+    weight: "",
+    length: "",
+    width: "",
+    ringSize: "",
     color: "",
-    material: "",
+    stone: "",
+    gender: "",
+    review: "",
+    style: "",
     images: [null, null, null, null],
   });
 
@@ -61,14 +68,21 @@ const UpdateProduct = ({ products }) => {
     setTimeout(() => setShowPopup(false), 2000);
     setEditIndex(null);
     setEditFormData({
-      name: "",
-      id: "",
-      amount: "",
-      discount: "",
-      date: "",
-      size: "",
+      title: "",
+      category: "",
+      price: "",
+      description: "",
+      stock: "",
+      metal: "",
+      weight: "",
+      length: "",
+      width: "",
+      ringSize: "",
       color: "",
-      material: "",
+      stone: "",
+      gender: "",
+      review: "",
+      style: "",
       images: [null, null, null, null],
     });
   };
@@ -168,9 +182,10 @@ const UpdateProduct = ({ products }) => {
               <tr className="bg-gray-700 text-sm">
                 <th className="px-4 py-2">Products</th>
                 <th className="px-4 py-2">Product ID</th>
-                <th className="px-4 py-2">Amount</th>
-                <th className="px-4 py-2">Discount</th>
-                <th className="px-4 py-2">Date</th>
+                <th className="px-4 py-2">Price</th>
+                <th className="px-4 py-2">Category</th>
+                {/* <th className="px-4 py-2">Discount</th>
+                <th className="px-4 py-2">Date</th> */}
                 <th className="px-4 py-2">Action</th>
               </tr>
             </thead>
@@ -180,11 +195,12 @@ const UpdateProduct = ({ products }) => {
                   key={product.id}
                   className="border-t border-gray-700 text-sm"
                 >
-                  <td className="px-4 py-2 text-center">{product.name}</td>
+                  <td className="px-4 py-2 text-center">{product.title}</td>
                   <td className="px-4 py-2 text-center">{product.id}</td>
-                  <td className="px-4 py-2 text-center">{product.amount}</td>
-                  <td className="px-4 py-2 text-center">{product.discount}</td>
-                  <td className="px-4 py-2 text-center">{product.date}</td>
+                  <td className="px-4 py-2 text-center">{product.price}</td>
+                  <td className="px-4 py-2 text-center">{product.category}</td>
+                  {/* <td className="px-4 py-2 text-center">{product.discount}</td>
+                  <td className="px-4 py-2 text-center">{product.date}</td> */}
                   <td className="px-4 py-2 text-center">
                     <button
                       onClick={() => handleEditClick(index)}
@@ -217,9 +233,9 @@ const UpdateProduct = ({ products }) => {
               </label>
               <input
                 type="text"
-                id="name"
-                value={editFormData.name}
-                onChange={(e) => handleEdit(editIndex, "name", e.target.value)}
+                id="title"
+                value={editFormData.title}
+                onChange={(e) => handleEdit(editIndex, "title", e.target.value)}
                 className="text-black p-3 border-none rounded-lg bg-gray-200 w-full"
                 placeholder="Product Name"
               />
@@ -240,48 +256,30 @@ const UpdateProduct = ({ products }) => {
 
             <div>
               <label htmlFor="amount" className="block text-sm font-bold mb-2">
-                Amount
+                Price
               </label>
               <input
                 type="text"
                 id="amount"
-                value={editFormData.amount}
-                onChange={(e) =>
-                  handleEdit(editIndex, "amount", e.target.value)
-                }
+                value={editFormData.price}
+                onChange={(e) => handleEdit(editIndex, "price", e.target.value)}
                 className="p-3 text-black border-none rounded-lg bg-gray-200 w-full"
-                placeholder="Amount"
+                placeholder="price"
               />
             </div>
             <div>
-              <label
-                htmlFor="discount"
-                className="block text-sm font-bold mb-2"
-              >
-                Discount
+              <label htmlFor="review" className="block text-sm font-bold mb-2">
+                Review
               </label>
               <input
                 type="text"
                 id="discount"
-                value={editFormData.discount}
+                value={editFormData.review}
                 onChange={(e) =>
-                  handleEdit(editIndex, "discount", e.target.value)
+                  handleEdit(editIndex, "review", e.target.value)
                 }
                 className="p-3 text-black border-none rounded-lg bg-gray-200 w-full"
-                placeholder="Discount"
-              />
-            </div>
-            <div>
-              <label htmlFor="date" className="block text-sm font-bold mb-2">
-                Date
-              </label>
-              <input
-                type="text"
-                id="date"
-                value={editFormData.date}
-                onChange={(e) => handleEdit(editIndex, "date", e.target.value)}
-                className="p-3 text-black border-none rounded-lg bg-gray-200 w-full"
-                placeholder="Date"
+                placeholder="Reviews"
               />
             </div>
 
@@ -316,20 +314,168 @@ const UpdateProduct = ({ products }) => {
                   }
                 />
                 <CustomDropdown
-                  label="Material"
+                  label="Category"
                   options={[
-                    { label: "Cotton", value: "cotton" },
-                    { label: "Polyester", value: "polyester" },
-                    { label: "Wool", value: "wool" },
-                    { label: "Silk", value: "silk" },
-                    { label: "Leather", value: "leather" },
+                    { label: "Tops", value: "tops" },
+                    { label: "Bottoms", value: "bottoms" },
+                    { label: "Dresses", value: "dresses" },
+                    { label: "Accessories", value: "accessories" },
                   ]}
-                  name="material"
-                  value={editFormData.material}
+                  name="category"
+                  value={editFormData.category}
                   onChange={(e) =>
-                    handleEdit(editIndex, "material", e.target.value)
+                    handleEdit(editIndex, "category", e.target.value)
                   }
                 />
+                <CustomDropdown
+                  label="Stock"
+                  options={[
+                    { label: "In Stock", value: "stock" },
+                    { label: "Outof Stock", value: "outof stock" },
+                  ]}
+                  name="stock"
+                  value={editFormData.stock}
+                  onChange={(e) =>
+                    handleEdit(editIndex, "category", e.target.value)
+                  }
+                />
+                <CustomDropdown
+                  label="Weight"
+                  options={[
+                    { label: "100g", value: "100g" },
+                    { label: "200g", value: "200g" },
+                    { label: "300g", value: "300g" },
+                    { label: "400g", value: "400g" },
+                    { label: "500g", value: "500g" },
+                  ]}
+                  name="weight"
+                  value={editFormData.weight}
+                  onChange={(e) =>
+                    handleEdit(editIndex, "category", e.target.value)
+                  }
+                />
+                <CustomDropdown
+                  label="Length"
+                  options={[
+                    { label: "100cm", value: "100cm" },
+                    { label: "200cm", value: "200cm" },
+                    { label: "300cm", value: "300cm" },
+                    { label: "400cm", value: "400cm" },
+                    { label: "500cm", value: "500cm" },
+                  ]}
+                  name="length"
+                  value={editFormData.length}
+                  onChange={(e) =>
+                    handleEdit(editIndex, "category", e.target.value)
+                  }
+                />
+                <CustomDropdown
+                  label="Width"
+                  options={[
+                    { label: "100cm", value: "100cm" },
+                    { label: "200cm", value: "200cm" },
+                    { label: "300cm", value: "300cm" },
+                    { label: "400cm", value: "400cm" },
+                    { label: "500cm", value: "500cm" },
+                  ]}
+                  name="width"
+                  value={editFormData.width}
+                  onChange={(e) =>
+                    handleEdit(editIndex, "category", e.target.value)
+                  }
+                />
+                <CustomDropdown
+                  label="Ring Size"
+                  options={[
+                    { label: "5", value: "5" },
+                    { label: "6", value: "6" },
+                    { label: "7", value: "7" },
+                    { label: "8", value: "8" },
+                    { label: "9", value: "9" },
+                  ]}
+                  name="ringSize"
+                  value={editFormData.ringSize}
+                  onChange={(e) =>
+                    handleEdit(editIndex, "category", e.target.value)
+                  }
+                />
+                <CustomDropdown
+                  label="Stone"
+                  options={[
+                    { label: "Diamond", value: "diamond" },
+                    { label: "Ruby", value: "ruby" },
+                    { label: "Sapphire", value: "sapphire" },
+                    { label: "Emerald", value: "emerald" },
+                    { label: "Topaz", value: "topaz" },
+                  ]}
+                  name="stone"
+                  value={editFormData.stone}
+                  onChange={(e) =>
+                    handleEdit(editIndex, "category", e.target.value)
+                  }
+                />
+                <CustomDropdown
+                  label="Metal"
+                  options={[
+                    { label: "Gold", value: "gold" },
+                    { label: "Silver", value: "silver" },
+                    { label: "Platinum", value: "platinum" },
+                    { label: "Titanium", value: "titanium" },
+                    { label: "Rose Gold", value: "rose gold" },
+                  ]}
+                  name="metal"
+                  value={editFormData.metal}
+                  onChange={(e) =>
+                    handleEdit(editIndex, "category", e.target.value)
+                  }
+                />
+                <CustomDropdown
+                  label="Gender"
+                  options={[
+                    { label: "Male", value: "M" },
+                    { label: "Female", value: "F" },
+                  ]}
+                  name="gender"
+                  value={editFormData.gender}
+                  onChange={(e) =>
+                    handleEdit(editIndex, "gender", e.target.value)
+                  }
+                />
+                <CustomDropdown
+                  label="Style"
+                  options={[
+                    { label: "Modern", value: "modern" },
+                    { label: "Vintage", value: "vintage" },
+                    { label: "Classic", value: "classic" },
+                    { label: "Retro", value: "retro" },
+                    { label: "Bohemian", value: "bohemian" },
+                  ]}
+                  name="style"
+                  value={editFormData.style}
+                  onChange={(e) =>
+                    handleEdit(editIndex, "style", e.target.value)
+                  }
+                />
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-1">
+                <div>
+                  <label
+                    htmlFor="description"
+                    className="block text-sm font-bold mb-2"
+                  >
+                    Description
+                  </label>
+                  <textarea
+                    type="description"
+                    id="description"
+                    value={editFormData.description}
+                    onChange={(e) =>
+                      handleEdit(editIndex, "description", e.target.value)
+                    }
+                    className="p-3 text-black border-none rounded-lg bg-gray-200 w-full"
+                    placeholder="description"
+                  />
+                </div>
               </div>
 
               {/* Image Upload Grid */}
