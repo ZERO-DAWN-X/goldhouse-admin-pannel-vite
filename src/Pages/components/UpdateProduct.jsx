@@ -282,6 +282,19 @@ const UpdateProduct = ({ products }) => {
                 placeholder="Reviews"
               />
             </div>
+            <div>
+              <label htmlFor="stock" className="block text-sm font-bold mb-2">
+                Stock
+              </label>
+              <input
+                type="text"
+                id="stock"
+                value={editFormData.stock}
+                onChange={(e) => handleEdit(editIndex, "stock", e.target.value)}
+                className="p-3 text-black border-none rounded-lg bg-gray-200 w-full"
+                placeholder="Stock"
+              />
+            </div>
 
             <div className="col-span-3">
               <div className="grid grid-cols-3 font-bold gap-4 my-4 mb-10">
@@ -327,18 +340,7 @@ const UpdateProduct = ({ products }) => {
                     handleEdit(editIndex, "category", e.target.value)
                   }
                 />
-                <CustomDropdown
-                  label="Stock"
-                  options={[
-                    { label: "In Stock", value: "stock" },
-                    { label: "Outof Stock", value: "outof stock" },
-                  ]}
-                  name="stock"
-                  value={editFormData.stock}
-                  onChange={(e) =>
-                    handleEdit(editIndex, "category", e.target.value)
-                  }
-                />
+
                 <CustomDropdown
                   label="Weight"
                   options={[

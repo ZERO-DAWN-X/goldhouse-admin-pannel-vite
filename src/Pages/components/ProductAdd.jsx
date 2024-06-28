@@ -195,15 +195,13 @@ const ProductAdd = ({ onSubmit }) => {
           </div>
         </div>
         <div className="grid grid-cols-3 font-bold gap-4 my-4">
-          <CustomDropdown
-            label="Stock"
-            options={[
-              { label: "In Stock", value: "stock" },
-              { label: "Outof Stock", value: "outof stock" },
-            ]}
+          <input
+            type="number"
             name="stock"
             value={product.stock}
             onChange={handleChange}
+            placeholder="Stock"
+            className="p-3 border-none rounded-lg bg-gray-200"
           />
           <CustomDropdown
             label="Category"
